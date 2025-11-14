@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# User-specific files
+*.swp
+*.swo
+*~
+.rrc
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# Security sensitive files
+*.key
+*.pem
+*.crt
+*.p12
+
+# Local configuration
+.env
+.env.local
+
+# Downloaded resources (optional, uncomment if you don't want to track these)
+# security/
+# wordlists/
+# resolvers/
+
