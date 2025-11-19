@@ -124,7 +124,7 @@
 - `rr` 或 `rr -check`：执行完整的系统检测
 - `rr -download-wordlists [path]`：下载字典文件
 - `rr -download-resolvers [path]`：下载解析器文件
-- `rr -s, --silent`：静默模式，仅输出 `source ${HOME}/.rrc` 命令
+- `rr -s, --silent`：静默模式，执行所有检查但不显示详细输出，最后输出 `source ${HOME}/.rrc` 命令
 - `rr -h, --help`：显示帮助信息
 
 **错误处理**：
@@ -177,7 +177,9 @@
 - **SecLists**：如果已存在，尝试 `git pull` 更新；否则克隆最新版本
 
 ### 静默模式
-- 静默模式下仅输出 `source ${HOME}/.rrc` 命令
+- 静默模式下执行所有检查逻辑（网络检测、代理检测、字典检查、解析器检查）
+- 不显示详细的检测输出和状态信息
+- 最后输出 `source ${HOME}/.rrc` 命令
 - 适用于管道调用：`rr -s | pbcopy`
 - 适用于脚本集成：`eval "$(rr -s)"`
 

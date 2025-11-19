@@ -36,6 +36,9 @@ URL_ANEW_REPO="https://github.com/tomnomnom/anew"
 # 输出系统
 #######################################
 
+# 全局静默标志
+RR_SILENT="${RR_SILENT:-false}"
+
 # 检测是否支持颜色
 supports_color() {
   [ -t 1 ] && [ "${TERM:-}" != "dumb" ]
@@ -72,22 +75,27 @@ fi
 
 # 基础输出函数
 log() {
+  [ "$RR_SILENT" = "true" ] && return 0
   printf "${COLOR_GRAY}[%s]${COLOR_RESET} %s\n" "$(date '+%H:%M:%S')" "$*"
 }
 
 info() {
+  [ "$RR_SILENT" = "true" ] && return 0
   printf "${COLOR_CYAN}[INFO]${COLOR_RESET} %s\n" "$*"
 }
 
 success() {
+  [ "$RR_SILENT" = "true" ] && return 0
   printf "${COLOR_GREEN}[SUCCESS]${COLOR_RESET} %s\n" "$*"
 }
 
 warn() {
+  [ "$RR_SILENT" = "true" ] && return 0
   >&2 printf "${COLOR_YELLOW}[WARNING]${COLOR_RESET} %s\n" "$*"
 }
 
 error() {
+  [ "$RR_SILENT" = "true" ] && return 0
   >&2 printf "${COLOR_RED}[ERROR]${COLOR_RESET} %s\n" "$*"
 }
 
@@ -98,6 +106,7 @@ die() {
 
 # 打印检测项（简化版）
 print_check() {
+  [ "$RR_SILENT" = "true" ] && return 0
   local status="$1"
   local label="$2"
   shift 2
@@ -139,6 +148,7 @@ print_check() {
 
 # 打印详细信息（缩进）
 print_detail() {
+  [ "$RR_SILENT" = "true" ] && return 0
   printf "     ${COLOR_DIM}%s${COLOR_RESET}\n" "$*"
 }
 
@@ -610,18 +620,21 @@ check_proxy_status() {
 run_checks() {
   local silent="${1:-false}"
   
+  # 设置全局静默标志
   if [ "$silent" = "true" ]; then
-    ensure_directories
-    write_config
-    printf "source ${HOME}/.rrc\n"
-    return 0
+    RR_SILENT="true"
+  else
+    RR_SILENT="false"
   fi
   
-  printf '\n'
-  printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
-  printf "${COLOR_BOLD}${COLOR_BLUE}  ${COLOR_BOLD}recon-runway (rr)${COLOR_RESET}\n"
-  printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
-  printf '\n'
+  # 非静默模式显示标题
+  if [ "$silent" != "true" ]; then
+    printf '\n'
+    printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
+    printf "${COLOR_BOLD}${COLOR_BLUE}  ${COLOR_BOLD}recon-runway (rr)${COLOR_RESET}\n"
+    printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
+    printf '\n'
+  fi
   
   ensure_directories
   
@@ -639,15 +652,20 @@ run_checks() {
   
   # 自动生成配置文件
   write_config
-  printf '\n'
   
-  info "执行以下命令以应用变量到当前终端:"
-  printf "${COLOR_GRAY}source ${HOME}/.rrc${COLOR_RESET}\n"
-  printf '\n'
+  # 输出 source 命令（静默和非静默模式都输出）
+  if [ "$silent" = "true" ]; then
+    printf "source ${HOME}/.rrc\n"
+  else
+    printf '\n'
+    info "执行以下命令以应用变量到当前终端:"
+    printf "${COLOR_GRAY}source ${HOME}/.rrc${COLOR_RESET}\n"
+    printf '\n'
 
-  info "如需设置目标，请执行:"
-  printf "${COLOR_GRAY}TARGET=example.com${COLOR_RESET}\n"
-  printf "${COLOR_GRAY}TARGETS=domains.txt${COLOR_RESET}\n"
+    info "如需设置目标，请执行:"
+    printf "${COLOR_GRAY}TARGET=example.com${COLOR_RESET}\n"
+    printf "${COLOR_GRAY}TARGETS=domains.txt${COLOR_RESET}\n"
+  fi
 }
 
 #######################################
