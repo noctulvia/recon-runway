@@ -92,9 +92,19 @@ install_script() {
 verify_installation() {
   if command -v "$INSTALL_NAME" >/dev/null 2>&1; then
     echo -e "${GREEN}验证成功：${INSTALL_NAME} 已安装${NC}"
+    
+    # 显示安装的版本号
+    local installed_version
+    if installed_version=$("$INSTALL_NAME" --version 2>/dev/null); then
+      echo -e "${BLUE}已安装版本：${GREEN}${installed_version}${NC}"
+    fi
+    
     echo ""
     echo -e "${BLUE}运行以下命令查看帮助：${NC}"
     echo -e "  ${GREEN}${INSTALL_NAME} --help${NC}"
+    echo ""
+    echo -e "${BLUE}运行以下命令查看版本：${NC}"
+    echo -e "  ${GREEN}${INSTALL_NAME} --version${NC}"
     echo ""
     echo -e "${BLUE}运行以下命令开始使用：${NC}"
     echo -e "  ${GREEN}${INSTALL_NAME}${NC}"

@@ -68,6 +68,13 @@ curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/main/install
 安装完成后，运行以下命令验证：
 ```bash
 rr --help
+rr --version  # 查看版本号
+```
+
+**更新到最新版本**：
+如果已安装旧版本，重新运行安装命令即可更新：
+```bash
+curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/main/install.sh | bash
 ```
 
 #### 方法二：使用 install 命令（macOS & Linux 通用）
@@ -148,6 +155,14 @@ rr --help
    ```
 
 ## 使用说明
+
+### 查看版本号
+
+```bash
+rr --version
+# 或
+rr -v
+```
 
 ### 基本命令
 
