@@ -6,6 +6,11 @@
 set -euo pipefail
 
 #######################################
+# 版本信息
+#######################################
+RR_VERSION="1.0.0"
+
+#######################################
 # 全局配置变量 - 可在此处直接修改
 #######################################
 RR_CONFIG_FILE="${HOME}/.rrc"
@@ -154,20 +159,22 @@ print_detail() {
 
 
 usage() {
-  cat <<'EOF'
+  cat <<EOF
 用法: rr [选项]
 
   无参数                          执行网络、资源、代理及配置检测（默认行为）
   -check                         执行网络、资源、代理及配置检测
   -download-wordlists [path]     下载字典文件，可指定路径（文件或目录）
   -download-resolvers [path]     下载解析器文件，可指定目录
-  -s, --silent                   静默模式，仅输出 source 命令（便于管道调用）
+  -s, --silent                   静默模式，执行所有检查但不显示详细输出，最后输出 source 命令
+  -v, --version                  显示版本号
   -h, --help                     查看帮助
 
 示例:
   rr                              执行检测（默认）
   rr -check                       执行检测
-  rr -s                           静默模式，仅输出 source 命令
+  rr -s                           静默模式，执行所有检查后输出 source 命令
+  rr -v                           显示版本号
   rr -download-wordlists /tmp/wordlists
   rr -download-resolvers
 EOF
@@ -631,7 +638,7 @@ run_checks() {
   if [ "$silent" != "true" ]; then
     printf '\n'
     printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
-    printf "${COLOR_BOLD}${COLOR_BLUE}  ${COLOR_BOLD}recon-runway (rr)${COLOR_RESET}\n"
+    printf "${COLOR_BOLD}${COLOR_BLUE}  ${COLOR_BOLD}recon-runway (rr) v${RR_VERSION}${COLOR_RESET}\n"
     printf "${COLOR_BOLD}${COLOR_BLUE}═══════════════════════════════════════════════════════════${COLOR_RESET}\n"
     printf '\n'
   fi
@@ -707,6 +714,10 @@ main() {
         ;;
       -s|--silent)
         silent_flag=true
+        ;;
+      -v|--version)
+        printf "recon-runway (rr) version %s\n" "$RR_VERSION"
+        exit 0
         ;;
       -h|--help)
         usage
