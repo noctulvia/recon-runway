@@ -49,7 +49,28 @@ brew install anew
 
 ### 安装脚本
 
-#### 方法一：使用 install 命令（推荐，macOS & Linux 通用）
+#### 方法一：一键安装（推荐，最简单）
+
+使用以下命令直接从 GitHub 安装：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/main/install.sh | bash
+```
+
+该命令会：
+- 自动下载最新版本的 `recon-runway.sh`
+- 安装到 `/usr/local/bin/rr`
+- 设置执行权限
+- 验证安装是否成功
+
+**注意**：安装到 `/usr/local/bin` 需要 sudo 权限，脚本会提示输入密码。
+
+安装完成后，运行以下命令验证：
+```bash
+rr --help
+```
+
+#### 方法二：使用 install 命令（macOS & Linux 通用）
 
 1. **进入脚本所在目录**：
    ```bash
@@ -71,7 +92,7 @@ brew install anew
    rr --help
    ```
 
-#### 方法二：创建符号链接
+#### 方法三：创建符号链接
 
 1. **下载脚本**：将 `recon-runway` 脚本保存到本地目录（例如：`~/bin/recon-runway.sh`）
 
@@ -90,7 +111,7 @@ brew install anew
    rr --help
    ```
 
-#### 方法三：使用别名（临时方案）
+#### 方法四：使用别名（临时方案）
 
 如果不想修改系统 PATH，可以在 shell 配置文件中添加别名：
 
