@@ -54,7 +54,12 @@ brew install anew
 使用以下命令直接从 GitHub 安装：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/refs/heads/main/install.sh | bash
+```
+
+**注意**：如果遇到 GitHub CDN 缓存问题，也可以使用以下命令强制获取最新版本：
+```bash
+curl -fsSL "https://raw.githubusercontent.com/noctulvia/recon-runway/main/install.sh?$(date +%s)" | bash
 ```
 
 该命令会：
@@ -74,7 +79,7 @@ rr --version  # 查看版本号
 **更新到最新版本**：
 如果已安装旧版本，重新运行安装命令即可更新：
 ```bash
-curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/noctulvia/recon-runway/refs/heads/main/install.sh | bash
 ```
 
 #### 方法二：使用 install 命令（macOS & Linux 通用）

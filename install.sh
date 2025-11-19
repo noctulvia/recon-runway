@@ -13,7 +13,8 @@ NC='\033[0m' # No Color
 
 # 配置
 REPO_URL="https://github.com/noctulvia/recon-runway"
-SCRIPT_URL="${REPO_URL}/raw/main/recon-runway.sh"
+# 使用 refs/heads/main 路径以避免 GitHub CDN 缓存问题
+SCRIPT_URL="${REPO_URL}/raw/refs/heads/main/recon-runway.sh"
 INSTALL_DIR="/usr/local/bin"
 INSTALL_NAME="rr"
 TEMP_DIR=$(mktemp -d)
